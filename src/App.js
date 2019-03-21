@@ -36,8 +36,8 @@ class App extends React.Component {
 
   constructor() {
     super();
-    //state === data (What our data looks like at any given point, or what is the state of my data right now)
-    this.state = { //this.state object, or the brain of the component tree
+    
+    this.state = { 
       todoItems: todoArr,
       task: '',
       id: Date.now,
