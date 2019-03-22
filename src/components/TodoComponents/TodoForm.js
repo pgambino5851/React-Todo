@@ -12,6 +12,7 @@ const TodoForm = props => {
             onChange={props.updateTodo}
             />
             <button onClick={props.updateTodoArr}>Add Task</button>
+            <button onClick={props.deleteTodoItem}>Delete Completed Tasks</button>
         </form>
     );
 };
