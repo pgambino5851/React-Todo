@@ -1,25 +1,17 @@
 import React from 'react';
 import './Todo.css';
 
-// let todoArr = [
-//     {
-//         task: 'Organize Garage',
-//         id: Date.now(),
-//         completed: false
-//     },
-  
-//     {
-//         task: 'Bake Cookies',
-//         id: Date.now(),
-//         completed: false
-//       }
-//   ]  
-
 const Todo = props => {
+  // console.log(props.todoProp.completed);
     return (
-    <p> {props.todoProp.task} </p>
+      
+    <p 
+      onClick={() =>{props.updateTodoComplete(props.todoProp.id)}}
+      style={props.todoProp.completed ? {textDecoration: 'line-through'} : null}
+    > {props.todoProp.task} </p>
     );
    
 }
 
 export default Todo;
+

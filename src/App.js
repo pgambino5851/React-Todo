@@ -1,32 +1,22 @@
 import React from 'react';
 import './App.css';
-import Todo from './components/TodoComponents/Todo'
+// import Todo from './components/TodoComponents/Todo'
 import TodoForm from './components/TodoComponents/TodoForm';
 import TodoList from './components/TodoComponents/TodoList'
 
-let todoArr = [
-  {
-      task: 'Organize Garage',
-      id: Date.now(),
-      completed: false
-  },
+// let todoArr = [
+//   {
+//       task: 'Organize Garage',
+//       id: Date.now(),
+//       completed: false
+//   },
 
-  {
-      task: 'Bake Cookies',
-      id: Date.now()+1,
-      completed: false
-    }
-]
-
-// class TodoApp extends React.Component {
-//   constructor() {
-//     super();
-//     //state === data (What our data looks like at any given point, or what is the state of my data right now)
-//     this.state = { //this.state object, or the brain of the component tree
-//       todoItems: todoArr,
+//   {
+//       task: 'Bake Cookies',
+//       id: Date.now()+1,
+//       completed: false
 //     }
-//   }
-// }
+// ]
 
 
 class App extends React.Component {
@@ -36,12 +26,21 @@ class App extends React.Component {
 
   constructor() {
     super();
-    //state === data (What our data looks like at any given point, or what is the state of my data right now)
-    this.state = { //this.state object, or the brain of the component tree
-      todoItems: todoArr,
-      task: '',
-      id: Date.now,
-      completed: false,
+    
+    this.state = { 
+      todoItems: [
+                {
+                  task: 'Organize Garage',
+                  id: 1528817077286,
+                  completed: false
+                },
+                {
+                  task: 'Bake Cookies',
+                  id: 1528817084358,
+                  completed: false
+                }
+              ],
+        task: ''
     }
   }
 
@@ -59,12 +58,41 @@ class App extends React.Component {
     event.preventDefault();
     const newTask ={
       task: this.state.task,
-      id: Date.now,
+      id: Date.now(),
       completed: false
     }
     this.setState({
-      todoItems: [...this.state.todoItems, newTask]
+      todoItems: [...this.state.todoItems, newTask],
+      task: ''
     })
+  }
+
+  updateTodoComplete = id => {
+    let todoItems = this.state.todoItems.slice();
+    todoItems = todoItems.map(todo => {
+      if(todo.id === id){
+        console.log(todo.completed);
+        todo.completed = !todo.completed;
+        console.log(todo.completed);
+        return todo;
+      } else {
+        return todo;
+      }
+    })
+
+    this.setState({ todoItems })
+  }
+
+  deleteTodoItem = event => {
+    event.preventDefault();
+    console.log("The current ToDo List is: " + this.state.todoItems)
+    let todoItems = this.state.todoItems.filter(item => {
+      console.log("The current item is: " + item);
+      console.log("The completed status of the current item is: " + item.completed)
+      return !item.completed //returns all items who have a completed value of false
+    })
+
+    this.setState({ todoItems });
   }
 
   render() {
@@ -72,12 +100,15 @@ class App extends React.Component {
       <div className="app-container">
         <h2>Welcome to your Todo App!</h2>
         {/* {console.log(this.state.todoItems)} */}
-        <TodoList todos={this.state.todoItems} />
+        <TodoList 
+          todoItems={this.state.todoItems}
+          updateTodoComplete={this.updateTodoComplete}
+          />
         <TodoForm 
         task={this.state.task} 
         updateTodo={this.updateTodo}
-        completed={this.completed}
         updateTodoArr={this.updateTodoArr}
+        deleteTodoItem={this.deleteTodoItem}
         />
       </div>
     );
